@@ -1,52 +1,46 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import { Play, Pause, Volume2, VolumeX } from "lucide-react"
+import { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
 export default function VideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-  })
+  });
 
   const togglePlay = () => {
     if (videoRef.current && audioRef.current) {
       if (isPlaying) {
-        videoRef.current.pause()
-        audioRef.current.pause()
+        videoRef.current.pause();
+        audioRef.current.pause();
       } else {
-        videoRef.current.play()
-        audioRef.current.play()
+        videoRef.current.play();
+        audioRef.current.play();
       }
-      setIsPlaying(!isPlaying)
+      setIsPlaying(!isPlaying);
     }
-  }
+  };
 
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
     }
-  }
+  };
 
   return (
-    <section id="video" className="relative py-20 sm:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/background.svg)" }}
-        />
-        <div className="absolute inset-0 bg-black/80" />
-      </div>
-
+    <section
+      id="video"
+      className="relative z-10 py-20 sm:py-32 overflow-hidden"
+    >
       <div ref={ref} className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -65,8 +59,9 @@ export default function VideoSection() {
               Play The <span className="text-[#c7933b]">Video</span>
             </h2>
             <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
-              A colorful journey through memories captured in photos. Watch how taking a story from the days before cell
-              phones and instant connections.
+              A colorful journey through memories captured in photos. Watch how
+              taking a story from the days before cell phones and instant
+              connections.
             </p>
           </motion.div>
 
@@ -114,16 +109,30 @@ export default function VideoSection() {
                 className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4"
               >
                 <div className="flex items-center gap-4">
-                  <button onClick={togglePlay} className="text-white hover:text-[#c7933b] transition-colors">
-                    {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6" />}
+                  <button
+                    onClick={togglePlay}
+                    className="text-white hover:text-[#c7933b] transition-colors"
+                  >
+                    {isPlaying ? (
+                      <Pause className="w-6 h-6" />
+                    ) : (
+                      <Play className="w-6 h-6" />
+                    )}
                   </button>
 
                   <div className="flex-1 h-1 bg-white/30 rounded-full overflow-hidden">
                     <div className="h-full bg-[#c7933b] w-1/3" />
                   </div>
 
-                  <button onClick={toggleMute} className="text-white hover:text-[#c7933b] transition-colors">
-                    {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+                  <button
+                    onClick={toggleMute}
+                    className="text-white hover:text-[#c7933b] transition-colors"
+                  >
+                    {isMuted ? (
+                      <VolumeX className="w-6 h-6" />
+                    ) : (
+                      <Volume2 className="w-6 h-6" />
+                    )}
                   </button>
                 </div>
               </motion.div>
@@ -131,7 +140,9 @@ export default function VideoSection() {
 
             {/* Watch out the video label */}
             <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-full">
-              <p className="text-white text-sm font-medium">Watch out the video</p>
+              <p className="text-white text-sm font-medium">
+                Watch out the video
+              </p>
             </div>
           </motion.div>
         </motion.div>
@@ -144,8 +155,10 @@ export default function VideoSection() {
         transition={{ duration: 1, delay: 0.8 }}
         className="absolute bottom-8 left-0 right-0 text-center"
       >
-        <p className="text-[#c7933b]/50 text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider">THE JOURNEY</p>
+        <p className="text-[#c7933b]/50 text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider">
+          THE JOURNEY
+        </p>
       </motion.div>
     </section>
-  )
+  );
 }

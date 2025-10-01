@@ -1,39 +1,66 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import Link from "next/link"
-import Image from "next/image"
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+import Image from "next/image";
 
 const galleryImages = [
-  { src: "/placeholder.svg?height=400&width=600", alt: "Vintage map", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=600&width=600", alt: "Telephone building", span: "col-span-1 row-span-2" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Vintage house", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Railway station", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=800&width=800", alt: "Harbor boats", span: "col-span-2 row-span-2" },
-  { src: "/placeholder.svg?height=600&width=600", alt: "Linemen working", span: "col-span-1 row-span-2" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Boats at dock", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Red boat", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Red peppers", span: "col-span-1 row-span-1" },
-]
+  {
+    src: "/banner.png",
+    alt: "Vintage map",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/placeholder.svg?height=600&width=600",
+    alt: "Telephone building",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    src: "/banner.png",
+    alt: "Vintage house",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/banner.png",
+    alt: "Railway station",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/placeholder.svg?height=800&width=800",
+    alt: "Harbor boats",
+    span: "col-span-2 row-span-2",
+  },
+  {
+    src: "/placeholder.svg?height=600&width=600",
+    alt: "Linemen working",
+    span: "col-span-1 row-span-2",
+  },
+  {
+    src: "/banner.png",
+    alt: "Boats at dock",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/banner.png",
+    alt: "Red boat",
+    span: "col-span-1 row-span-1",
+  },
+  {
+    src: "/banner.png",
+    alt: "Red peppers",
+    span: "col-span-1 row-span-1",
+  },
+];
 
 export default function GalleryPreview() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-  })
+  });
 
   return (
-    <section className="relative py-20 sm:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/background.svg)" }}
-        />
-        <div className="absolute inset-0 bg-black/75" />
-      </div>
-
+    <section className="relative z-10 py-20 sm:py-32 overflow-hidden">
       <div ref={ref} className="container mx-auto px-4">
         {/* Section Title */}
         <motion.div
@@ -46,8 +73,9 @@ export default function GalleryPreview() {
             Photo <span className="text-[#c7933b]">Gallery</span>
           </h2>
           <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
-            A colorful journey through memories captured in photos, each one telling a story from the days before cell
-            phones and instant connections.
+            A colorful journey through memories captured in photos, each one
+            telling a story from the days before cell phones and instant
+            connections.
           </p>
         </motion.div>
 
@@ -94,5 +122,5 @@ export default function GalleryPreview() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
