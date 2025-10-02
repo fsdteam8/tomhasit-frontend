@@ -18,7 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Tomhasit - Providing Dial Tone",
+  title: "Providing Dial Tone",
   description: "A nostalgic journey through memories captured in photos",
 };
 
