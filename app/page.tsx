@@ -9,8 +9,8 @@ export default function HomePage() {
     <>
       <main className="min-h-screen">
         <Hero />
-        <VideoSection />
         <GalleryPreview />
+        <VideoSection />
         <ContactSection />
       </main>
     </>

@@ -46,7 +46,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section className="relative z-10 py-20 sm:py-32 overflow-hidden">
+    <section className="relative z-10 pb-20 sm:pb-32 overflow-hidden">
       <div ref={ref} className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
