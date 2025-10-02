@@ -53,13 +53,6 @@ export default function GalleryPage() {
       toast.success("Gallery item deleted successfully")
       setIsDeleteModalOpen(false)
       setSelectedItemId(null)
-      
-      // Reset to first page if current page is empty after deletion
-      const remainingItems = galleries.length - 1
-      const newTotalPages = Math.ceil(remainingItems / itemsPerPage)
-      if (currentPage > newTotalPages && newTotalPages > 0) {
-        setCurrentPage(newTotalPages)
-      }
     } catch (error) {
       toast.error("Failed to delete gallery item")
       console.error("Delete error:", error)
@@ -111,10 +104,7 @@ export default function GalleryPage() {
             <div className="flex flex-col items-center justify-center py-12">
               <p className="text-gray-500 mb-4">No gallery items found</p>
               <Button 
-                onClick={() => {
-                  setEditItem(null)
-                  setIsAddModalOpen(true)
-                }}
+                onClick={() => setIsAddModalOpen(true)}
                 className="bg-[#c7933b] hover:bg-[#b8842f] text-white"
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -141,7 +131,7 @@ export default function GalleryPage() {
                             alt={item.title}
                             width={90}
                             height={60}
-                            className="rounded-lg object-cover h-24 w-28"
+                            className="rounded-lg object-cover"
                           />
                         </td>
                         <td className="px-6 py-4">

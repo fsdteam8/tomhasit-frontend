@@ -9,13 +9,12 @@ import { AddImageModal } from "@/components/dashboard/add-image-modal"
 import { DeleteConfirmModal } from "@/components/dashboard/delete-confirm-modal"
 import { Pagination } from "@/components/dashboard/pagination"
 import { useGalleries, useDeleteGallery } from "@/hooks/useGallery"
-import { toast } from "sonner" // or your preferred toast library
+import { toast } from "sonner" 
 
 export default function GalleryPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
-  const [editItem, setEditItem] = useState<any | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
@@ -35,16 +34,6 @@ export default function GalleryPage() {
     setIsDeleteModalOpen(true)
   }
 
-  const handleEdit = (item: any) => {
-    setEditItem(item)
-    setIsAddModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsAddModalOpen(false)
-    setEditItem(null)
-  }
-
   const confirmDelete = async () => {
     if (!selectedItemId) return
 
@@ -53,13 +42,6 @@ export default function GalleryPage() {
       toast.success("Gallery item deleted successfully")
       setIsDeleteModalOpen(false)
       setSelectedItemId(null)
-      
-      // Reset to first page if current page is empty after deletion
-      const remainingItems = galleries.length - 1
-      const newTotalPages = Math.ceil(remainingItems / itemsPerPage)
-      if (currentPage > newTotalPages && newTotalPages > 0) {
-        setCurrentPage(newTotalPages)
-      }
     } catch (error) {
       toast.error("Failed to delete gallery item")
       console.error("Delete error:", error)
@@ -93,10 +75,7 @@ export default function GalleryPage() {
         title="Gallery"
         action={
           <Button 
-            onClick={() => {
-              setEditItem(null)
-              setIsAddModalOpen(true)
-            }} 
+            onClick={() => setIsAddModalOpen(true)} 
             className="bg-[#c7933b] hover:bg-[#b8842f] text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -111,10 +90,7 @@ export default function GalleryPage() {
             <div className="flex flex-col items-center justify-center py-12">
               <p className="text-gray-500 mb-4">No gallery items found</p>
               <Button 
-                onClick={() => {
-                  setEditItem(null)
-                  setIsAddModalOpen(true)
-                }}
+                onClick={() => setIsAddModalOpen(true)}
                 className="bg-[#c7933b] hover:bg-[#b8842f] text-white"
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -141,7 +117,7 @@ export default function GalleryPage() {
                             alt={item.title}
                             width={90}
                             height={60}
-                            className="rounded-lg object-cover h-24 w-28"
+                            className="rounded-lg object-cover"
                           />
                         </td>
                         <td className="px-6 py-4">
@@ -152,10 +128,7 @@ export default function GalleryPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-2">
-                            <button 
-                              onClick={() => handleEdit(item)}
-                              className="p-2 text-[#c7933b] hover:bg-[#f9f4eb] rounded-lg transition-colors"
-                            >
+                            <button className="p-2 text-[#c7933b] hover:bg-[#f9f4eb] rounded-lg transition-colors">
                               <Pencil className="h-4 w-4" />
                             </button>
                             <button
@@ -191,8 +164,7 @@ export default function GalleryPage() {
 
       <AddImageModal 
         isOpen={isAddModalOpen} 
-        onClose={handleCloseModal}
-        editItem={editItem}
+        onClose={() => setIsAddModalOpen(false)} 
       />
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}

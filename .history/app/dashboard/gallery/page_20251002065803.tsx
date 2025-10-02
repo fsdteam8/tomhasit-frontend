@@ -141,7 +141,7 @@ export default function GalleryPage() {
                             alt={item.title}
                             width={90}
                             height={60}
-                            className="rounded-lg object-cover h-24 w-28"
+                            className="rounded-lg object-cover h-20 "
                           />
                         </td>
                         <td className="px-6 py-4">
