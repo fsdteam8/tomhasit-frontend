@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata } from "next/metadata"
 import { DashboardSidebar } from "@/components/dashboard/sidebar"
 import { SessionProvider } from "@/providers/session-provider"
 import { QueryProvider } from "@/providers/query-provider"

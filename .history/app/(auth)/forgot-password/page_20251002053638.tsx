@@ -22,7 +22,7 @@ export default function ForgotPasswordPage() {
     setSuccess(false)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`, {
+      const response = await fetch(`${process.env.NEXTAUTH_API}/auth/forgot-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,12 +37,6 @@ export default function ForgotPasswordPage() {
       }
 
       setSuccess(true)
-      
-      // Store the access token and redirect to verify email page
-      const accessToken = data.data?.accessToken
-      if (accessToken) {
-        localStorage.setItem("otpAccessToken", accessToken)
-      }
       
       // Redirect to verify email page after successful OTP send
       setTimeout(() => {

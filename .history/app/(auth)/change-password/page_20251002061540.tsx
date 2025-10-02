@@ -56,19 +56,21 @@ export default function ChangePasswordPage() {
     }
 
     setIsLoading(true)
-    const accessToken = localStorage.getItem("otpAccessToken")
+
     try {
       // Get reset token from localStorage (stored during OTP verification)
       const resetToken = localStorage.getItem("resetToken")
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
+          ...(resetToken && { Authorization: `Bearer ${resetToken}` }),
         },
         body: JSON.stringify({
-         newPassword
+          email,
+          newPassword,
+          confirmPassword,
         }),
       })
 

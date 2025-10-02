@@ -38,12 +38,6 @@ export default function ForgotPasswordPage() {
 
       setSuccess(true)
       
-      // Store the access token and redirect to verify email page
-      const accessToken = data.data?.accessToken
-      if (accessToken) {
-        localStorage.setItem("otpAccessToken", accessToken)
-      }
-      
       // Redirect to verify email page after successful OTP send
       setTimeout(() => {
         router.push(`/verify-email?email=${encodeURIComponent(email)}`)

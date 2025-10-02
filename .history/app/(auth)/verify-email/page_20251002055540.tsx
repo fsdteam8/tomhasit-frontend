@@ -55,18 +55,13 @@ export default function VerifyEmailPage() {
     const otpCode = otp.join("")
 
     try {
-      const accessToken = localStorage.getItem("otpAccessToken")
-      if (!accessToken) {
-        throw new Error("Access token not found. Please try again.")
-      }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`, {
+      const response = await fetch("{{stavenar77}}/auth/verify-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
         },
         body: JSON.stringify({ 
+          email,
           otp: otpCode 
         }),
       })
@@ -77,10 +72,7 @@ export default function VerifyEmailPage() {
         throw new Error(data.message || "Invalid OTP. Please try again.")
       }
 
-      // Clear OTP access token after successful verification
-      // localStorage.removeItem("otpAccessToken")
-
-      // Store any new token if provided
+      // Store token or any response data if needed
       if (data.token) {
         localStorage.setItem("resetToken", data.token)
       }

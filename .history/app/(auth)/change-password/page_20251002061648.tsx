@@ -56,7 +56,7 @@ export default function ChangePasswordPage() {
     }
 
     setIsLoading(true)
-    const accessToken = localStorage.getItem("otpAccessToken")
+
     try {
       // Get reset token from localStorage (stored during OTP verification)
       const resetToken = localStorage.getItem("resetToken")
@@ -65,7 +65,7 @@ export default function ChangePasswordPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`
+          ...(resetToken && { Authorization: `Bearer ${resetToken}` }),
         },
         body: JSON.stringify({
          newPassword

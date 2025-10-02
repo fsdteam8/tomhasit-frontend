@@ -78,7 +78,7 @@ export default function VerifyEmailPage() {
       }
 
       // Clear OTP access token after successful verification
-      // localStorage.removeItem("otpAccessToken")
+      localStorage.removeItem("otpAccessToken")
 
       // Store any new token if provided
       if (data.token) {
