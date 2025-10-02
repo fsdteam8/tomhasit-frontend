@@ -1,30 +1,19 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
-
-const galleryImages = [
-  { src: "/placeholder.svg?height=400&width=600", alt: "Vintage map", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=600&width=600", alt: "Telephone building", span: "col-span-1 row-span-2" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Vintage house", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Railway station", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=800&width=800", alt: "Harbor boats", span: "col-span-2 row-span-2" },
-  { src: "/placeholder.svg?height=600&width=600", alt: "Linemen working", span: "col-span-1 row-span-2" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Boats at dock", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Red boat", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Red peppers", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Railway station 2", span: "col-span-1 row-span-1" },
-  { src: "/placeholder.svg?height=800&width=800", alt: "Harbor boats 2", span: "col-span-2 row-span-2" },
-  { src: "/placeholder.svg?height=600&width=600", alt: "Linemen working 2", span: "col-span-1 row-span-2" },
-]
+import { useState } from "react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function GalleryGrid() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   const { data: gallery } = useQuery({
     queryKey: ["images"],
@@ -34,7 +23,7 @@ export default function GalleryGrid() {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch videos");
+        throw new Error("Failed to fetch gallery");
       }
 
       return response.json();
@@ -42,8 +31,17 @@ export default function GalleryGrid() {
     select: (data) => data?.data,
   });
 
-  console.log("Videos:", gallery);
+  const handlePrev = () => {
+    if (gallery && selectedIndex !== null) {
+      setSelectedIndex((selectedIndex - 1 + gallery.length) % gallery.length)
+    }
+  }
 
+  const handleNext = () => {
+    if (gallery && selectedIndex !== null) {
+      setSelectedIndex((selectedIndex + 1) % gallery.length)
+    }
+  }
 
   return (
     <div ref={ref}>
@@ -76,8 +74,9 @@ export default function GalleryGrid() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.05 * index }}
-            className={` relative overflow-hidden rounded-lg group cursor-pointer`}
+            className="relative overflow-hidden rounded-lg group cursor-pointer"
             whileHover={{ scale: 1.02 }}
+            onClick={() => setSelectedIndex(index)}
           >
             <Image
               src={image.image.url || "/placeholder.svg"}
@@ -92,6 +91,66 @@ export default function GalleryGrid() {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Fullscreen Modal with Carousel */}
+      <AnimatePresence>
+        {selectedIndex !== null && (
+          <motion.div
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedIndex(null)}
+              className="absolute top-6 right-6 text-white p-2 rounded-full bg-black/50 hover:bg-black transition z-50"
+            >
+              <X size={28} />
+            </button>
+
+            {/* Prev Button */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 sm:left-6 text-white p-3 sm:p-4 rounded-full bg-black/60 hover:bg-black transition z-50"
+            >
+              <ChevronLeft size={32} />
+            </button>
+
+            {/* Next Button */}
+            <button
+              onClick={handleNext}
+              className="absolute right-4 sm:right-6 text-white p-3 sm:p-4 rounded-full bg-black/60 hover:bg-black transition z-50"
+            >
+              <ChevronRight size={32} />
+            </button>
+
+            {/* Image */}
+            {/* Image + Title */}
+            <motion.div
+              key={selectedIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-full max-h-[80vh] flex flex-col items-center justify-center text-center"
+            >
+              <Image
+                src={gallery[selectedIndex].image.url}
+                alt={gallery[selectedIndex].title}
+                width={1200}
+                height={800}
+                className="object-contain rounded-lg w-auto max-h-[70vh]"
+              />
+              <p className="text-white mt-4 text-sm sm:text-base">
+                {gallery[selectedIndex].title}
+              </p>
+            </motion.div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   )
 }

@@ -106,24 +106,26 @@ export default function GalleryPreview() {
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12"
         >
           {gallery?.map((image: { title: string, image: { url: string } }, index: number) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-              className={`relative overflow-hidden rounded-lg group cursor-pointer`}
-            >
-              <Image
-                src={image?.image?.url || "/placeholder.svg"}
-                alt={`Gallery Image ${index + 1}`}
-                width={600}
-                height={400}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute text-center place-content-center mt-16 text-white font-bold lg:text-xl text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {image?.title}
-              </div>
-            </motion.div>
+            <Link href="/gallery">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 * index }}
+                className={`relative overflow-hidden rounded-lg group cursor-pointer`}
+              >
+                <Image
+                  src={image?.image?.url || "/placeholder.svg"}
+                  alt={`Gallery Image ${index + 1}`}
+                  width={600}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute text-center place-content-center mt-16 text-white font-bold lg:text-xl text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {image?.title}
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </motion.div>
 
