@@ -1,8 +1,8 @@
-import type React from "react";
-import { DashboardSidebar } from "@/components/dashboard/sidebar";
-import { SessionProvider } from "@/providers/session-provider";
-import { QueryProvider } from "@/providers/query-provider";
-import { Metadata } from "next";
+import type React from "react"
+import type { Metadata } from "next"
+import { DashboardSidebar } from "@/components/dashboard/sidebar"
+import { SessionProvider } from "@/providers/session-provider"
+import { QueryProvider } from "@/providers/query-provider"
 
 export const metadata: Metadata = {
   title: "Dashboard - Tomhasit",
