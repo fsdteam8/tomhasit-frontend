@@ -52,7 +52,7 @@ export default function GalleryGrid() {
         transition={{ duration: 0.8 }}
         className="text-center mb-12"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-white/70">
           Photo <span className="text-[#c7933b]">Gallery</span>
         </h1>
         <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">

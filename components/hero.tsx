@@ -15,9 +15,9 @@ export default function Hero() {
       <div className="fixed inset-0 -z-10">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/banner.png)" }}
+          style={{ backgroundImage: "url(/bg.png)" }}
         />
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
       {/* Content */}

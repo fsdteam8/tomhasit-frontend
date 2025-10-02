@@ -16,7 +16,7 @@ export default function DashboardLayout({
   return (
     <>
       <Header />
-      <main className="min-h-screen flex">
+      <main className="min-h-screen">
         {children}
       </main>
     </>
