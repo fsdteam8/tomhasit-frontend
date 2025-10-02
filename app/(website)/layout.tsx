@@ -4,8 +4,8 @@ import type { Metadata } from "next"
 import Header from "@/components/header"
 
 export const metadata: Metadata = {
-  title: "Dashboard - Tomhasit",
-  description: "Manage your content",
+  title: "Providing Dial Tone",
+  description: "A nostalgic journey through memories captured in photos",
 };
 
 export default function DashboardLayout({
@@ -14,11 +14,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-   <>
+    <>
       <Header />
-        <main className="min-h-screen flex">
-            {children}
-        </main>
-   </>
+      <main className="min-h-screen flex">
+        {children}
+      </main>
+    </>
   );
 }
