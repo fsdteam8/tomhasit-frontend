@@ -2,7 +2,7 @@ import GalleryGrid from "@/components/gallery-grid"
 
 export default function GalleryPage() {
   return (
-    <main className="min-h-screen relative mx-auto">
+    <main className="min-h-screen relative mx-auto lg:pt-20 pt-10">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div
@@ -10,13 +10,6 @@ export default function GalleryPage() {
           style={{ backgroundImage: "url(/bg.png)" }}
         />
         <div className="absolute inset-0 bg-black/70" />
-      </div>
-
-      {/* Vertical Text */}
-      <div className="fixed left-4 top-1/2 -translate-y-1/2 -z-10 hidden lg:block">
-        <div className="writing-mode-vertical text-[#c7933b]/30 text-2xl font-bold tracking-widest">
-          PROVIDING DIAL TONE THE JOURNEY
-        </div>
       </div>
 
       <div className="container mx-auto px-4 py-20">
