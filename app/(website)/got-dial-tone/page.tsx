@@ -3,7 +3,7 @@ import TestimonialsGrid from "@/components/testimonials-grid"
 
 export default function GotDialTonePage() {
   return (
-    <main className="min-h-screen z-10 relative">
+    <main className="min-h-screen z-10 relative mx-auto">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div

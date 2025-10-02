@@ -2,7 +2,7 @@ import GalleryGrid from "@/components/gallery-grid"
 
 export default function GalleryPage() {
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen relative mx-auto">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div
