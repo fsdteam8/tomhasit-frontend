@@ -111,7 +111,7 @@ export default function GotDialTonePage() {
                   <thead className="bg-[#f9fafb]">
                     <tr>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Visitor</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Comment</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">COmm</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Date</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Action</th>
                     </tr>

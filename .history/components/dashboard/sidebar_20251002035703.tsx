@@ -7,11 +7,11 @@ import { LayoutDashboard, ImageIcon, MessageSquare, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-  // {
-  //   name: "Dashboard",
-  //   href: "/dashboard",
-  //   icon: LayoutDashboard,
-  // },
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+  },
   {
     name: "Gallery",
     href: "/dashboard/gallery",
