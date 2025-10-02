@@ -31,7 +31,7 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/dashboard"
+        callbackUrl: "/dashboard/gallery"
       })
 
       if (result?.error) {
@@ -120,12 +120,7 @@ export default function LoginPage() {
           {isLoading ? "Logging in..." : "Log In"}
         </Button>
 
-        <p className="text-center text-sm text-[#667085]">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-[#c7933b] hover:underline font-medium">
-            Sign Up
-          </Link>
-        </p>
+      
       </form>
     </div>
   )

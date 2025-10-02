@@ -31,14 +31,14 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/dashboard"
+        callbackUrl: "/dashboard/gallery"
       })
 
       if (result?.error) {
         setError("Invalid email or password")
       } else if (result?.ok) {
         router.refresh() // Refresh the current page to ensure session is updated
-        router.push("/dashboard")
+        router.push("dashboard/gallery")
       }
     } catch (err) {
       setError("An error occurred. Please try again.")

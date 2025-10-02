@@ -7,7 +7,7 @@ import Header from "@/components/header";
 export default function HomePage() {
   return (
     <>
-      <main className="min-h-screen">
+      <main className="min-h-screen mx-auto">
         <Hero />
         <GalleryPreview />
         <VideoSection />

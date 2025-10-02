@@ -31,14 +31,14 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/dashboard"
+        callbackUrl: "/dashboard/gallery"
       })
 
       if (result?.error) {
         setError("Invalid email or password")
       } else if (result?.ok) {
         router.refresh() // Refresh the current page to ensure session is updated
-        router.push("/dashboard")
+        router.push("dashboard/gallery")
       }
     } catch (err) {
       setError("An error occurred. Please try again.")
@@ -120,12 +120,7 @@ export default function LoginPage() {
           {isLoading ? "Logging in..." : "Log In"}
         </Button>
 
-        <p className="text-center text-sm text-[#667085]">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-[#c7933b] hover:underline font-medium">
-            Sign Up
-          </Link>
-        </p>
+      
       </form>
     </div>
   )

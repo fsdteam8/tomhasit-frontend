@@ -30,7 +30,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
-        <Header />
         <QueryProvider>
           
           {children}</QueryProvider>

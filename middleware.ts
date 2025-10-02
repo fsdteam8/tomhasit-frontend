@@ -14,16 +14,18 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/verify-email") ||
     request.nextUrl.pathname.startsWith("/change-password")
 
-  const isDashboard = request.nextUrl.pathname.startsWith("/dashboard")
+  const isDashboard = request.nextUrl.pathname.startsWith("/dashboard/gallery")
 
   // Redirect to login if accessing dashboard without token
   if (isDashboard && !token) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 
+  
+
   // Redirect to dashboard if accessing auth pages with valid token
   if (isAuthPage && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
+    return NextResponse.redirect(new URL("/dashboard/gallery", request.url))
   }
 
   return NextResponse.next()
