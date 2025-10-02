@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 
 const galleryImages = [
   {
@@ -59,6 +60,24 @@ export default function GalleryPreview() {
     threshold: 0.1,
   });
 
+  const { data: gallery } = useQuery({
+    queryKey: ["videos"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch videos");
+      }
+
+      return response.json();
+    },
+    select: (data) => data?.data,
+  });
+
+  console.log("Videos:", gallery);
+
   return (
     <section className="relative z-10 py-20 sm:py-32 overflow-hidden">
       <div ref={ref} className="container mx-auto px-4">
@@ -69,7 +88,7 @@ export default function GalleryPreview() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-white/70">
             Photo <span className="text-[#c7933b]">Gallery</span>
           </h2>
           <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
@@ -86,22 +105,24 @@ export default function GalleryPreview() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12"
         >
-          {galleryImages.map((image, index) => (
+          {gallery?.map((image: { title: string, image: { url: string } }, index: number) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={inView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.1 * index }}
-              className={`${image.span} relative overflow-hidden rounded-lg group cursor-pointer`}
+              className={`relative overflow-hidden rounded-lg group cursor-pointer`}
             >
               <Image
-                src={image.src || "/placeholder.svg"}
-                alt={image.alt}
+                src={image?.image?.url || "/placeholder.svg"}
+                alt={`Gallery Image ${index + 1}`}
                 width={600}
                 height={400}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute text-center place-content-center mt-16 text-white font-bold lg:text-xl text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {image?.title}
+              </div>
             </motion.div>
           ))}
         </motion.div>

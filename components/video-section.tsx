@@ -56,18 +56,6 @@ export default function VideoSection() {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Bottom text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 1, delay: 0.8 }}
-        className="absolute bottom-8 left-0 right-0 text-center"
-      >
-        <p className="text-[#c7933b]/50 text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider">
-          THE JOURNEY
-        </p>
-      </motion.div>
     </section>
   );
 }

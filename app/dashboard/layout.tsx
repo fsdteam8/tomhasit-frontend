@@ -1,15 +1,19 @@
-import type React from "react"
-import type { Metadata } from "next/metadata"
-import { DashboardSidebar } from "@/components/dashboard/sidebar"
-import { SessionProvider } from "@/providers/session-provider"
-import { QueryProvider } from "@/providers/query-provider"
+import type React from "react";
+import { DashboardSidebar } from "@/components/dashboard/sidebar";
+import { SessionProvider } from "@/providers/session-provider";
+import { QueryProvider } from "@/providers/query-provider";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Dashboard - Tomhasit",
   description: "Manage your content",
-}
+};
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <SessionProvider>
       <QueryProvider>
@@ -19,5 +23,5 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </QueryProvider>
     </SessionProvider>
-  )
+  );
 }
