@@ -11,7 +11,7 @@ export default function Header() {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Got Dial Tone", path: "/got-dial-tone" },
+    { name: "Got Dial Tone?", path: "/got-dial-tone" },
   ]
 
   return (

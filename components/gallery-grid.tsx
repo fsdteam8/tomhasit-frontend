@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import Image from "next/image"
+import { useQuery } from "@tanstack/react-query"
 
 const galleryImages = [
   { src: "/placeholder.svg?height=400&width=600", alt: "Vintage map", span: "col-span-1 row-span-1" },
@@ -24,6 +25,25 @@ export default function GalleryGrid() {
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const { data: gallery } = useQuery({
+    queryKey: ["images"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch videos");
+      }
+
+      return response.json();
+    },
+    select: (data) => data?.data,
+  });
+
+  console.log("Videos:", gallery);
+
 
   return (
     <div ref={ref}>
@@ -50,24 +70,24 @@ export default function GalleryGrid() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        {galleryImages.map((image, index) => (
+        {gallery?.map((image: { title: string, image: { url: string } }, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.05 * index }}
-            className={`${image.span} relative overflow-hidden rounded-lg group cursor-pointer`}
+            className={` relative overflow-hidden rounded-lg group cursor-pointer`}
             whileHover={{ scale: 1.02 }}
           >
             <Image
-              src={image.src || "/placeholder.svg"}
-              alt={image.alt}
+              src={image.image.url || "/placeholder.svg"}
+              alt={`Image ${index + 1}`}
               width={600}
               height={400}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <p className="text-white font-medium">{image.alt}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center lg:mt-52 justify-center p-4">
+              <p className="text-white font-medium capitalize">{image.title}</p>
             </div>
           </motion.div>
         ))}

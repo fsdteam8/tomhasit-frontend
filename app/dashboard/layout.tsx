@@ -7,9 +7,13 @@ import { QueryProvider } from "@/providers/query-provider"
 export const metadata: Metadata = {
   title: "Dashboard - Tomhasit",
   description: "Manage your content",
-}
+};
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <SessionProvider>
       <QueryProvider>
@@ -19,5 +23,5 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </QueryProvider>
     </SessionProvider>
-  )
+  );
 }
