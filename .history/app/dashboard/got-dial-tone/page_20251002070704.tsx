@@ -102,7 +102,7 @@ export default function GotDialTonePage() {
         <div className="bg-white rounded-lg border border-[#e6e7e6]">
           {reviews.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <p className="text-gray-500 mb-4">No comment found</p>
+              <p className="text-gray-500 mb-4">No reviews found</p>
             </div>
           ) : (
             <>
@@ -111,7 +111,7 @@ export default function GotDialTonePage() {
                   <thead className="bg-[#f9fafb]">
                     <tr>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Visitor</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Comment</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Review</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Date</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-[#1a1a1a]">Action</th>
                     </tr>

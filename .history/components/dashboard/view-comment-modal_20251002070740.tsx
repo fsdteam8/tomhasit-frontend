@@ -20,7 +20,7 @@ export function ViewCommentModal({ isOpen, onClose, comment }: ViewCommentModalP
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold text-[#1a1a1a]">Comment Details</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold text-[#1a1a1a]">Review Details</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6 mt-4">
@@ -36,7 +36,7 @@ export function ViewCommentModal({ isOpen, onClose, comment }: ViewCommentModalP
             </div>
 
             <div>
-              <p className="text-sm font-medium text-[#667085] mb-2">Comment</p>
+              <p className="text-sm font-medium text-[#667085] mb-2">Review</p>
               <div className="bg-[#f9fafb] rounded-lg p-4 border border-[#e6e7e6]">
                 <p className="text-sm text-[#344054] leading-relaxed whitespace-pre-wrap">{comment.review}</p>
               </div>
