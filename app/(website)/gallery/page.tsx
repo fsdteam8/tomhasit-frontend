@@ -7,7 +7,7 @@ export default function GalleryPage() {
       <div className="fixed inset-0 -z-10">
         <div
           className="absolute inset-0 bg-cover bg-top bg-no-repeat"
-          style={{ backgroundImage: "url(/book.png)" }}
+          style={{ backgroundImage: "url(/bg.png)" }}
         />
         <div className="absolute inset-0 bg-black/70" />
       </div>
