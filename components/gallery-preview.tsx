@@ -18,7 +18,7 @@ export default function GalleryPreview() {
   const { data: gallery } = useQuery({
     queryKey: ["videos"],
     queryFn: async () => {
-      const response = await fetch(`https://tomhasit-backend-1.onrender.com/api/v1/gallery/all-galleries`)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries`)
 
       if (!response.ok) {
         throw new Error("Failed to fetch videos")
