@@ -32,7 +32,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 text-balance text-white/70"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 text-balance text-white/90"
           >
             Providing Dial Tone Snapshots <span className="text-[#c7933b]">from the Past</span>
           </motion.h1>

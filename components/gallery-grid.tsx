@@ -1,156 +1,94 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { useInView } from "react-intersection-observer"
+import Link from "next/link"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
 
-export default function GalleryGrid() {
+export default function GalleryPreview() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set())
 
   const { data: gallery } = useQuery({
-    queryKey: ["images"],
+    queryKey: ["videos"],
     queryFn: async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries`
-      );
+      const response = await fetch(`https://tomhasit-backend-1.onrender.com/api/v1/gallery/all-galleries`)
 
       if (!response.ok) {
-        throw new Error("Failed to fetch gallery");
+        throw new Error("Failed to fetch videos")
       }
 
-      return response.json();
+      return response.json()
     },
     select: (data) => data?.data,
-  });
+  })
 
-  const handlePrev = () => {
-    if (gallery && selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + gallery.length) % gallery.length)
-    }
-  }
+  console.log("Videos:", gallery)
 
-  const handleNext = () => {
-    if (gallery && selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % gallery.length)
-    }
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => new Set(prev).add(index))
   }
 
   return (
-    <div ref={ref}>
-      {/* Section Title */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-12"
-      >
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-white/70">
-          Photo <span className="text-[#c7933b]">Gallery</span>
-        </h1>
-        <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
-          A colorful journey through memories captured in photos. Each one telling a story from the days before cell
-          phones and instant connections.
-        </p>
-      </motion.div>
+    <section className="relative z-10 py-5 sm:py-20 overflow-hidden">
+      <div ref={ref} className="container mx-auto px-4">
+        {/* Section Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-white/70">
+            Photo <span className="text-[#c7933b]">Gallery</span>
+          </h2>
+          <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
+            A colorful journey through memories captured in photos, each one telling a story from the days before cell
+            phones and instant connections.
+          </p>
+        </motion.div>
 
-      {/* Gallery Grid */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-      >
-        {gallery?.map((image: { title: string, image: { url: string } }, index: number) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.05 * index }}
-            className="relative overflow-hidden rounded-lg group cursor-pointer"
-            whileHover={{ scale: 1.02 }}
-            onClick={() => setSelectedIndex(index)}
-          >
-            <Image
-              src={image.image.url || "/placeholder.svg"}
-              alt={`Image ${index + 1}`}
-              width={600}
-              height={400}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center lg:mt-52 justify-center p-4">
-              <p className="text-white font-medium capitalize">{image.title}</p>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="columns-2 md:columns-3 lg:columns-4 gap-4 mb-12"
+        >
+          {gallery?.map((image: { title: string; image: { url: string } }, index: number) => (
+            <Link href="/gallery" key={index}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={loadedImages.has(index) ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.05 * index }}
+                className="relative overflow-hidden rounded-lg group cursor-pointer mb-4 break-inside-avoid"
+              >
+                <div className="relative w-full">
+                  <Image
+                    src={image?.image?.url || "/placeholder.svg"}
+                    alt={image?.title || `Gallery Image ${index + 1}`}
+                    width={600}
+                    height={400}
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+                    onLoad={() => handleImageLoad(index)}
+                  />
+                </div>
+                <div className="absolute text-center place-content-center text-white font-bold lg:text-xl text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                  <span className="text-balance">{image?.title}</span>
+                </div>
+              </motion.div>
+            </Link>
+          ))}
+        </motion.div>
 
-      {/* Fullscreen Modal with Carousel */}
-      <AnimatePresence>
-        {selectedIndex !== null && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setSelectedIndex(null)}
-              className="absolute top-6 right-6 text-white p-2 rounded-full bg-black/50 hover:bg-black transition z-50"
-            >
-              <X size={28} />
-            </button>
-
-            {/* Prev Button */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-4 sm:left-6 text-white p-3 sm:p-4 rounded-full bg-black/60 hover:bg-black transition z-50"
-            >
-              <ChevronLeft size={32} />
-            </button>
-
-            {/* Next Button */}
-            <button
-              onClick={handleNext}
-              className="absolute right-4 sm:right-6 text-white p-3 sm:p-4 rounded-full bg-black/60 hover:bg-black transition z-50"
-            >
-              <ChevronRight size={32} />
-            </button>
-
-            {/* Image */}
-            {/* Image + Title */}
-            <motion.div
-              key={selectedIndex}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-full max-h-[80vh] flex flex-col items-center justify-center text-center"
-            >
-              <Image
-                src={gallery[selectedIndex].image.url}
-                alt={gallery[selectedIndex].title}
-                width={1200}
-                height={800}
-                className="object-contain rounded-lg w-auto max-h-[70vh]"
-              />
-              <p className="text-white mt-4 text-sm sm:text-base">
-                {gallery[selectedIndex].title}
-              </p>
-            </motion.div>
-
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-    </div>
+        
+      </div>
+    </section>
   )
 }

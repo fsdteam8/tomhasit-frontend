@@ -75,7 +75,7 @@ export default function ContactSection() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-white">
-              Got <span className="text-[#c7933b]">Dial Tone</span>
+              Got <span className="text-[#c7933b]">Dial Tone?</span>
             </h2>
             <p className="text-base sm:text-lg text-[#e6e7e6] max-w-2xl mx-auto text-pretty leading-relaxed">
               Share your own memories of life before cell phones and computers when pay phones, maps,
