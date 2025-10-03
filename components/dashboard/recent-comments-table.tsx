@@ -31,7 +31,7 @@ export function RecentCommentsTable() {
   return (
     <div className="bg-white rounded-lg border border-[#e6e7e6]">
       <div className="p-6 border-b border-[#e6e7e6] flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-[#1a1a1a]">Recent Got Dial Tone</h2>
+        <h2 className="text-lg font-semibold text-[#1a1a1a]">Recent Got Dial Tone?</h2>
         <Link href="/dashboard/got-dial-tone" className="text-sm font-medium text-[#c7933b] hover:underline">
           See all
         </Link>

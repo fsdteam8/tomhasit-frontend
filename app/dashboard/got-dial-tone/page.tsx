@@ -71,7 +71,7 @@ export default function GotDialTonePage() {
   if (isLoading) {
     return (
       <>
-        <PageHeader title="Got Dial Tone" />
+        <PageHeader title="Got Dial Tone?" />
         <div className="flex items-center justify-center h-96">
           <Loader2 className="h-8 w-8 animate-spin text-[#c7933b]" />
         </div>
@@ -83,7 +83,7 @@ export default function GotDialTonePage() {
   if (error) {
     return (
       <>
-        <PageHeader title="Got Dial Tone" />
+        <PageHeader title="Got Dial Tone?" />
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <p className="text-red-600 mb-2">Failed to load reviews</p>
@@ -96,7 +96,7 @@ export default function GotDialTonePage() {
 
   return (
     <>
-      <PageHeader title="Got Dial Tone" />
+      <PageHeader title="Got Dial Tone?" />
 
       <div className="p-8">
         <div className="bg-white rounded-lg border border-[#e6e7e6]">

@@ -18,7 +18,7 @@ const navigation = [
     icon: ImageIcon,
   },
   {
-    name: "Got Dial Tone",
+    name: "Got Dial Tone?",
     href: "/dashboard/got-dial-tone",
     icon: MessageSquare,
   },
