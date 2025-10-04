@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
-import { LayoutDashboard, ImageIcon, MessageSquare, LogOut } from "lucide-react"
+import { Key, ImageIcon, MessageSquare, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navigation = [
@@ -21,6 +21,10 @@ const navigation = [
     name: "Got Dial Tone?",
     href: "/dashboard/got-dial-tone",
     icon: MessageSquare,
+  }, {
+    name: "Change Password",
+    href: "/dashboard/change-password",
+    icon: Key,
   },
 ]
 
