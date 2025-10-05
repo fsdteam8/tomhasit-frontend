@@ -1,8 +1,10 @@
 import ChangePasswordForm from '@/components/dashboard/auth/change-password'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 export default function page() {
   return (
-    <ChangePasswordForm/>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChangePasswordForm />
+    </Suspense>
   )
 }

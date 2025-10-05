@@ -1,3 +1,4 @@
+"use client";
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
@@ -46,7 +47,9 @@ export const useChangePassword = (
   options?: UseChangePasswordOptions
 ): UseMutationResult<ChangePasswordResponse, ChangePasswordError, ChangePasswordData> => {
   // call session hook inside our custom hook (valid)
-  const { data: session } = useSession();
+  // avoid destructuring directly in case useSession() is undefined during server prerender
+  const _sessionHook = useSession();
+  const session = (_sessionHook as any)?.data ?? null;
 
   return useMutation<ChangePasswordResponse, ChangePasswordError, ChangePasswordData>({
     mutationFn: async (data: ChangePasswordData) => {
