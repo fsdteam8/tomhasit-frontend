@@ -22,7 +22,7 @@ export default function GalleryPreview() {
     queryKey: ["videos"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries`
+        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries?all=true`
       );
       if (!response.ok) throw new Error("Failed to fetch videos");
       return response.json();
