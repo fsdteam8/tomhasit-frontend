@@ -86,9 +86,7 @@ export default function GalleryPreview() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="columns-2 md:columns-3 lg:columns-4 gap-4 mb-12"
         >
-          {gallery
-            ?.slice(0, 8)
-            .map(
+          {gallery?.map(
               (
                 image: { title: string; image: { url: string } },
                 index: number
