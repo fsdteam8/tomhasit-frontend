@@ -22,12 +22,15 @@ export default function GalleryPreview() {
     queryKey: ["videos"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries?all=true`
+        `${process.env.NEXT_PUBLIC_API_URL}/gallery/all-galleries?all=true`,
+        { cache: "no-store" } // ⬅️ ensures fresh fetch every time
       );
       if (!response.ok) throw new Error("Failed to fetch videos");
       return response.json();
     },
     select: (data) => data?.data,
+    staleTime: 0, // ⬅️ force fresh data, avoids reusing old cached partial data
+    refetchOnMount: "always", // ⬅️ always refetch when component mounts
   });
 
   const handleImageLoad = (index: number) => {
@@ -87,41 +90,41 @@ export default function GalleryPreview() {
           className="columns-2 md:columns-3 lg:columns-4 gap-4 mb-12"
         >
           {gallery?.map(
-              (
-                image: { title: string; image: { url: string } },
-                index: number
-              ) => (
-                <div
-                  key={index}
-                  onClick={() => openModal(index)}
-                  className="cursor-pointer"
+            (
+              image: { title: string; image: { url: string } },
+              index: number
+            ) => (
+              <div
+                key={index}
+                onClick={() => openModal(index)}
+                className="cursor-pointer"
+              >
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={
+                    loadedImages.has(index) ? { opacity: 1, scale: 1 } : {}
+                  }
+                  transition={{ duration: 0.5, delay: 0.05 * index }}
+                  className="relative overflow-hidden rounded-lg group cursor-pointer mb-4 break-inside-avoid"
                 >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={
-                      loadedImages.has(index) ? { opacity: 1, scale: 1 } : {}
-                    }
-                    transition={{ duration: 0.5, delay: 0.05 * index }}
-                    className="relative overflow-hidden rounded-lg group cursor-pointer mb-4 break-inside-avoid"
-                  >
-                    <div className="relative w-full">
-                      <Image
-                        src={image?.image?.url || "/placeholder.svg"}
-                        alt={image?.title || `Gallery Image ${index + 1}`}
-                        width={600}
-                        height={400}
-                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
-                        onLoad={() => handleImageLoad(index)}
-                      />
-                    </div>
-                    <div className="absolute text-center text-white font-bold lg:text-lg text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
-                      <span className="text-balance">{image?.title}</span>
-                    </div>
-                  </motion.div>
-                </div>
-              )
-            )}
+                  <div className="relative w-full">
+                    <Image
+                      src={image?.image?.url || "/placeholder.svg"}
+                      alt={image?.title || `Gallery Image ${index + 1}`}
+                      width={600}
+                      height={400}
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+                      onLoad={() => handleImageLoad(index)}
+                    />
+                  </div>
+                  <div className="absolute text-center text-white font-bold lg:text-lg text-base inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
+                    <span className="text-balance">{image?.title}</span>
+                  </div>
+                </motion.div>
+              </div>
+            )
+          )}
         </motion.div>
       </div>
 
